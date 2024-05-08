@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Light'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Light'; min-height: 14.0px}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1">#! /bin/sh</p>
+<p class="p1">cd $1</p>
+<p class="p2"><br></p>
+<p class="p1">#se il terzo parametro: flag=A o C</p>
+<p class="p1">#cerco i file che si chiamano F e se ne trovo uno scrivo il nome assoluto del direttorio<span class="Apple-converted-space"> </span></p>
+<p class="p1">#nome assoluto del file trovato su un file temporaneo<span class="Apple-converted-space"> </span></p>
+<p class="p1">if test "$3" = A -o "$3" = C</p>
+<p class="p1">then<span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>#echo fase $3</p>
+<p class="p1"><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span>if test -f $2</p>
+<p class="p1"><span class="Apple-tab-span">	</span>then<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>echo "Trovato $2 in `pwd`"</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>echo <span class="Apple-tab-span">	</span>"`pwd`/$i" &gt;&gt; $4<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>fi</p>
+<p class="p1">fi</p>
+<p class="p2"><br></p>
+<p class="p1">#se il terzo parametro e' uguale a B invoco la seconda fase</p>
+<p class="p1">#dove cerco i direttori in cui non ci sono file che si chiamano F</p>
+<p class="p1">if test "$3" = B</p>
+<p class="p1">then<span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>#echo fase $3</p>
+<p class="p1"><span class="Apple-tab-span">	</span>trovato=0</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if test -f $2</p>
+<p class="p1"><span class="Apple-tab-span">	</span>then<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>trovato=1</p>
+<p class="p1"><span class="Apple-tab-span">	</span>fi</p>
+<p class="p1">#se non trovo un file scrivo il nome del direttorio sullo stdout</p>
+<p class="p1"><span class="Apple-tab-span">	</span>if test $trovato -eq 0</p>
+<p class="p1"><span class="Apple-tab-span">	</span>then<span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>echo "In `pwd` non c'e' un file che si chiama $2 e quindi lo creo"</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&gt; $2</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>echo "`pwd`/$2" &gt;&gt; /tmp/perPulisci</p>
+<p class="p1"><span class="Apple-tab-span">	</span>fi</p>
+<p class="p1">fi</p>
+<p class="p2"><br></p>
+<p class="p1">#se trovo un direttorio esplorabile</p>
+<p class="p1">#richiamo la ricorsione con il terzo parametro come flag</p>
+<p class="p1">for i in *<span class="Apple-converted-space"> </span></p>
+<p class="p1">do<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>if test -d $i -a -x $i <span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>then<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>#echo ricorsione</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>FCR.sh `pwd`/$i $2 $3 $4 #nella fase B $4 sara' nulllo</p>
+<p class="p1"><span class="Apple-tab-span">	</span>fi</p>
+<p class="p1">done</p>
+</body>
+</html>

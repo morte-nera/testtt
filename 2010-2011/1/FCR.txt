@@ -1,0 +1,45 @@
+#! /bin/sh
+cd $1
+
+#se il terzo parametro: flag=A o C
+#cerco i file che si chiamano F e se ne trovo uno scrivo il nome assoluto del direttorio 
+#nome assoluto del file trovato su un file temporaneo 
+if test "$3" = A -o "$3" = C
+then 	
+	#echo fase $3
+ 	if test -f $2
+	then 
+		echo "Trovato $2 in `pwd`"
+		echo 	"`pwd`/$i" >> $4 
+	fi
+fi
+
+#se il terzo parametro e' uguale a B invoco la seconda fase
+#dove cerco i direttori in cui non ci sono file che si chiamano F
+if test "$3" = B
+then	
+	#echo fase $3
+	trovato=0
+        if test -f $2
+	then 
+		trovato=1
+	fi
+#se non trovo un file scrivo il nome del direttorio sullo stdout
+	if test $trovato -eq 0
+	then 	
+		echo "In `pwd` non c'e' un file che si chiama $2 e quindi lo creo"
+		> $2
+		echo "`pwd`/$2" >> /tmp/perPulisci
+	fi
+fi
+
+#se trovo un direttorio esplorabile
+#richiamo la ricorsione con il terzo parametro come flag
+for i in * 
+do 
+	if test -d $i -a -x $i  
+	then 
+		#echo ricorsione
+		FCR.sh `pwd`/$i $2 $3 $4 #nella fase B $4 sara' nulllo
+	fi
+done
